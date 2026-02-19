@@ -6,6 +6,14 @@ Bairro: Jardim Fontalis
 Trabalha: Sim
 Objetivo: Alcançar conhecimentos com mais detalhes e me manter estável na vida.
 
+Nome Comple: Matheus Rezende dos Reis
+RA: 825157178
+Curso: Engenharia de Software
+Semestre: 7
+Bairro: Vila Formosa
+Trabalha: Sim
+Objetivo: Aprimorar meus conhecimentos técnicos e ser capaz de implementar o que aprendi no dia-a-dia.
+
 Nome Completo: Guilherme Rodrigues dos Santos 
 RA:826186263
 Curso: Engenharia de Software
