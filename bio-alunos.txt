@@ -5,3 +5,11 @@ Semestre: 7
 Bairro: Jardim Fontalis
 Trabalha: Sim
 Objetivo: Alcançar conhecimentos com mais detalhes e me manter estável na vida.
+
+Nome Completo: Guilherme Rodrigues dos Santos 
+RA:826186263
+Curso: Engenharia de Software
+Semestre: 5
+Bairro: Jardim Vila Formosa 
+Trabalha: Não
+Objetivo: Aprender cada vez mais, crescer profissionalmente e ter establidadena área
