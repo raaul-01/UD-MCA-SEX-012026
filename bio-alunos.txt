@@ -4,4 +4,4 @@ Curso: Engenharia de Software
 Semestre: 7
 Bairro: Parque Guarani
 Trabalha: Sim
-Objetivo: Avançar em uma carreira que eu goste, de preferência em jogos, e levar uma vida tranquila fazendo o que eu gosto.
+Objetivo:Avançar em uma carreira que eu goste, de preferência em jogos, e levar uma vida tranquila fazendo o que eu gosto.
