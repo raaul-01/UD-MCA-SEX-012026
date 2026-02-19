@@ -13,3 +13,11 @@ Semestre: 7
 Bairro: Vila Formosa
 Trabalha: Sim
 Objetivo: Aprimorar meus conhecimentos técnicos e ser capaz de implementar o que aprendi no dia-a-dia.
+
+Nome Completo: Guilherme Rodrigues dos Santos 
+RA:826186263
+Curso: Engenharia de Software
+Semestre: 5
+Bairro: Jardim Vila Formosa 
+Trabalha: Não
+Objetivo: Aprender cada vez mais, crescer profissionalmente e ter establidadena área
