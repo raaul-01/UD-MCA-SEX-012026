@@ -1,7 +1,7 @@
-Nome Completo: Raul Monteiro
-RA: 824219820
+Nome Completo: Lucas Ferreira dos Santos
+RA: 823123953
 Curso: Engenharia de Software
 Semestre: 7
-Bairro: Jardim Fontalis
+Bairro: Parque Guarani
 Trabalha: Sim
-Objetivo: Alcançar conhecimentos com mais detalhes e me manter estável na vida.
+Objetivo: Avançar em uma carreira que eu goste, de preferência em jogos, e levar uma vida tranquila fazendo o que eu gosto.
