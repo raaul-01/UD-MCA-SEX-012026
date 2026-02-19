@@ -28,4 +28,4 @@ Curso: Engenharia de Software
 Semestre: 5
 Bairro: Jardim Vila Formosa 
 Trabalha: Não
-Objetivo: Aprender cada vez mais, crescer profissionalmente e ter establidadena área
+Objetivo: Aprender cada vez mais, crescer profissionalmente e ter establidade na área
