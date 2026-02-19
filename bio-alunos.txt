@@ -1,7 +1,7 @@
 Nome Completo: Raul Monteiro
 RA: 824219820
 Curso: Engenharia de Software
-Semestre: X
+Semestre: 7
 Bairro: Jardim Fontalis
-Sim
-Alcançar conhecimentos com mais detalhes e me manter estável na vida.
+Trabalha: Sim
+Objetivo: Alcançar conhecimentos com mais detalhes e me manter estável na vida.
