@@ -1,0 +1,35 @@
+
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #660000;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+section {
+    margin: 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+h2 {
+    color: #660000;
+}
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff6600;
+}
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
