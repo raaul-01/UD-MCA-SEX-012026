@@ -29,3 +29,11 @@ Semestre: 5
 Bairro: Jardim Vila Formosa 
 Trabalha: Não
 Objetivo: Aprender cada vez mais, crescer profissionalmente e ter establidade na área
+
+Nome Completo: João Raimundo Barreto Neto
+RA: 824211099
+CURSO: ENGENHARIA DE SOFTWARE
+SEMESTRE: 5° SEMESTRE
+Bairro: VILA CISPER
+Trabalho: SIM
+Objetivo: APRENDER UTILIZAÇÃO DO GIT E GITHUB
