@@ -2,70 +2,38 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Projeto Atividade 4</title>
+    <title>Perfis Cadastrados</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; display: flex; flex-direction: column; align-items: center; padding: 50px; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0px 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { color: #333; text-align: center; margin-bottom: 20px; }
-        .campo { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #666; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #FF8C00; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
-        button:hover { background-color: #e07b00; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #ffffff; padding: 40px; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: #4e5d6c; margin-bottom: 30px; }
+        
+        .card { 
+            background: white; padding: 20px; margin-bottom: 15px; 
+            border: 1px solid #eee; border-radius: 15px; 
+            width: 100%; max-width: 450px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 6px solid #6a76d4; /* Detalhe azul na lateral */
+        }
+
+        .btn-voltar { 
+            margin-top: 20px; color: #6a76d4; text-decoration: none; 
+            font-weight: bold; padding: 10px 20px; border: 1px solid #6a76d4; 
+            border-radius: 10px; transition: 0.3s; 
+        }
+        .btn-voltar:hover { background: #6a76d4; color: white; }
     </style>
 </head>
 <body>
+    <h1>Perfis Cadastrados</h1>
 
-    <div class="container">
-        <h2>Projeto Atividade 4</h2>
-        
-        <form id="perfilForm">
-            <div class="campo">
-                <label>Nome:</label>
-                <input type="text" name="nome" required>
-            </div>
-            <div class="campo">
-                <label>Idade:</label>
-                <input type="number" name="idade" required>
-            </div>
-            <div class="campo">
-                <label>Qual sua universidade?</label>
-                <select name="universidade" required>
-                    <option value="">Selecione...</option>
-                    <option value="USP">USP</option>
-                    <option value="UNIP">UNIP</option>
-                    <option value="Mackenzie">Mackenzie</option>
-                    <option value="Anhembi Morumbi">Anhembi Morumbi</option>
-                    <option value="Outra">Outra</option>
-                </select>
-            </div>
-            <button type="submit">Salvar Perfil</button>
-        </form>
+    {% for perfil in perfis %}
+    <div class="card">
+        <p><strong>Nome:</strong> {{ perfil.nome }}</p>
+        <p><strong>Idade:</strong> {{ perfil.idade }}</p>
+        <p><strong>Universidade:</strong> {{ perfil.universidade }}</p>
     </div>
+    {% endfor %}
 
-    <script>
-        document.getElementById("perfilForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-
-            let dadosPerfil = {
-                tipo: "perfil",
-                nome: e.target.nome.value,
-                idade: e.target.idade.value,
-                universidade: e.target.universidade.value
-            };
-
-            fetch("/coletar", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(dadosPerfil)
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert("Perfil salvo com sucesso!");
-                    window.location.href = "/usuarios"; // Redireciona para a lista
-                }
-            });
-        });
-    </script>
+    <a href="/" class="btn-voltar">← Cadastrar Novo</a>
 </body>
 </html>

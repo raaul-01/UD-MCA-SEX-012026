@@ -1,116 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Projeto - Atividade 04</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATIVIDADE 04</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            margin: 0;
+        /* Estilo base seguindo suas imagens */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #ffffff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
         }
-
-        .container {
-            width: 60%;
-            margin: 50px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
+        .container { 
+            width: 90%; 
+            max-width: 500px; 
             text-align: center;
         }
-
-        h1 {
-            color: #444;
+        h2 { 
+            color: #4e5d6c; 
+            font-size: 28px; 
+            margin-bottom: 25px; 
         }
-
-        h2 {
-            margin-top: 20px;
+        .campo { 
+            margin-bottom: 15px; 
+        }
+        
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ccc; 
+            border-radius: 12px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
             color: #555;
+            outline: none;
         }
 
-        input, select {
-            padding: 10px;
-            width: 70%;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
+        input:focus, select:focus {
+            border-color: #6a76d4;
         }
 
-        button {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin: 5px;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-        }
-
-        a {
-            display: block;
+        /* Botão com o degradê azul/roxo da sua imagem */
+        button { 
+            width: 180px; 
+            padding: 12px; 
             margin-top: 20px;
-            color: #764ba2;
-            text-decoration: none;
-            font-weight: bold;
+            background: linear-gradient(to right, #6a76d4, #8b66c4); 
+            color: white; 
+            border: none; 
+            border-radius: 15px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: 500;
+            transition: 0.3s; 
+            box-shadow: 0 4px 10px rgba(106, 118, 212, 0.3);
         }
-
-        a:hover {
-            text-decoration: underline;
+        button:hover { 
+            opacity: 0.9; 
+            transform: translateY(-2px); 
         }
     </style>
 </head>
-
 <body>
 
-<div class="container">
+    <div class="container">
+        <h2>Perfil do Usuário</h2>
+        
+        <form id="perfilForm">
+            <div class="campo">
+                <input type="text" name="nome" placeholder="Nome" required>
+            </div>
+            <div class="campo">
+                <input type="number" name="idade" placeholder="Idade" required>
+            </div>
+            <div class="campo">
+                <select name="universidade" required>
+                    <option value="">Selecione sua universidade...</option>
+                    <option value="Universidade São Judas Mooca">Universidade São Judas Mooca</option>
+                    <option value="USP">USP</option>
+                    <option value="UNIP">UNIP</option>
+                    <option value="Mackenzie">Mackenzie</option>
+                    <option value="Anhembi Morumbi">Anhembi Morumbi</option>
+                    <option value="Outra">Outra</option>
+                </select>
+            </div>
+            <button type="submit">Salvar Perfil</button>
+        </form>
+    </div>
 
-<h1>Atividade 04</h1>
+    <script>
+        document.getElementById("perfilForm").addEventListener("submit", function(e) {
+            e.preventDefault();
 
-<h2>Perfil do Usuário</h2>
-<form id="perfilForm">
-    <input type="text" name="nome" placeholder="Nome"><br>
-    <input type="number" name="idade" placeholder="Idade"><br>
-    <select name="Universidade">
-        <option>Universidade São Judas Mooca</option>
-        <option>Universidade São Judas Butantã</option>
-        <option>Universidade São Vila Leolpoldina</option>
-        <option>Universidade São Judas Santana</option>
-        <option>Universidade São Judas Guarulhos</option>
-    </select><br>
-    <button type="submit">Salvar Perfil</button>
-</form>
+            let dados = {
+                tipo: "perfil",
+                nome: e.target.nome.value,
+                idade: e.target.idade.value,
+                universidade: e.target.universidade.value
+            };
 
-<p>Este site coleta dados de interação para análise.</p>
-
-<h2>Buscar produto</h2>
-<input type="text" placeholder="Digite algo..."><br>
-
-<!-- 🔥 BOTÃO CORRETO -->
-<button onclick="irParaProdutos()">Ir para produtos</button>
-
-<h2>Feedback</h2>
-<form id="feedbackForm">
-    <input type="text" name="problema" placeholder="Digite seu feedback"><br>
-    <button type="submit">Enviar</button>
-</form>
-
-<a href="/dashboard">Ver Dashboard</a>
-
-</div>
-
-<script src="/static/script.js"></script>
-
-<script>
-function irParaProdutos() {
-    tarefaConcluida(); // registra tempo
-    window.location.href = "/produtos";
-}
-</script>
-
+            fetch("/coletar", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(dados)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Isso faz a troca de página automática
+                    window.location.href = "/usuarios"; 
+                } else {
+                    alert("Erro ao salvar perfil.");
+                }
+            })
+            .catch(err => console.error("Erro:", err));
+        });
+    </script>
 </body>
 </html>
