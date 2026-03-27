@@ -5,18 +5,12 @@ import os
 
 app = Flask(__name__)
 
-# Função para conectar ao banco
 def conectar():
-    # Usando check_same_thread=False para evitar erros no servidor
-    conn = sqlite3.connect('database.db', check_same_thread=False)
-    return conn
+    return sqlite3.connect('database.db', check_same_thread=False)
 
-# Criar a tabela se não existir
+# Garante que a tabela suporte todos os tipos de dados (click, tempo, feedback, perfil)
 with conectar() as conn:
-    conn.execute('''CREATE TABLE IF NOT EXISTS dados 
-                    (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                     tipo TEXT, 
-                     conteudo TEXT)''')
+    conn.execute('CREATE TABLE IF NOT EXISTS dados (id INTEGER PRIMARY KEY AUTOINCREMENT, tipo TEXT, conteudo TEXT)')
 
 @app.route('/')
 def index():
@@ -27,11 +21,8 @@ def coletar():
     try:
         dados = request.json
         tipo = dados.get("tipo")
-        conteudo = str(dados)
-
         with conectar() as conn:
-            conn.execute("INSERT INTO dados (tipo, conteudo) VALUES (?, ?)", (tipo, conteudo))
-        
+            conn.execute("INSERT INTO dados (tipo, conteudo) VALUES (?, ?)", (tipo, str(dados)))
         return jsonify({"status": "sucesso"})
     except Exception as e:
         return jsonify({"status": "erro", "mensagem": str(e)}), 500
@@ -41,22 +32,15 @@ def lista_usuarios():
     try:
         with conectar() as conn:
             cursor = conn.cursor()
+            # Filtra apenas o que for 'perfil' para a lista não virar uma bagunça de cliques
             cursor.execute("SELECT conteudo FROM dados WHERE tipo = 'perfil'")
             registros = cursor.fetchall()
 
-        perfis = []
-        for r in registros:
-            try:
-                # Converte a string do banco em dicionário
-                perfis.append(ast.literal_eval(r[0]))
-            except:
-                continue
-
+        perfis = [ast.literal_eval(r[0]) for r in registros]
         return render_template("usuarios.html", perfis=perfis)
     except Exception as e:
-        return f"Erro ao carregar usuários: {e}", 500
+        return f"Erro ao listar: {e}", 500
 
 if __name__ == '__main__':
-    # O Render usa a variável de ambiente PORT
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
