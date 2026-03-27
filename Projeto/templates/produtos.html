@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Produtos</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .produto {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🛍️ Produtos</h1>
+
+{% for p in produtos %}
+<div class="produto">
+    <h3>{{ p.nome }}</h3>
+    <p>{{ p.preco }}</p>
+    <button>Ver produto</button>
+</div>
+{% endfor %}
+
+<a href="/">⬅ Voltar</a>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
