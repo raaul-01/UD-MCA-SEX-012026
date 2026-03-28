@@ -1,10 +1,8 @@
-// 🖱️ Capturar cliques do usuário
+// Capturar cliques
 document.addEventListener("click", function(e) {
     fetch("/coletar", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             tipo: "click",
             elemento: e.target.tagName,
@@ -15,8 +13,7 @@ document.addEventListener("click", function(e) {
     });
 });
 
-
-// ⏱️ Controle de tempo
+// Tempo de tarefa
 let inicio = Date.now();
 
 function tarefaConcluida() {
@@ -24,9 +21,7 @@ function tarefaConcluida() {
 
     fetch("/coletar", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             tipo: "tempo",
             tempo: tempo
@@ -36,23 +31,23 @@ function tarefaConcluida() {
     alert("Tempo registrado!");
 }
 
-
-// 💬 Feedback do usuário
+// Esperar carregar a página
 document.addEventListener("DOMContentLoaded", function() {
-    let formFeedback = document.getElementById("feedbackForm");
 
-    if (formFeedback) {
-        formFeedback.addEventListener("submit", function(e) {
+    let form = document.getElementById("feedbackForm");
+
+    if (form) {
+        form.addEventListener("submit", function(e) {
             e.preventDefault();
+
+            let problema = e.target.problema.value;
 
             fetch("/coletar", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     tipo: "feedback",
-                    mensagem: e.target.problema.value
+                    mensagem: problema
                 })
             });
 
@@ -61,20 +56,18 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
-// 👤 Perfil do usuário
+// Perfil do usuário
 document.addEventListener("DOMContentLoaded", function() {
-    let formPerfil = document.getElementById("perfilForm");
 
-    if (formPerfil) {
-        formPerfil.addEventListener("submit", function(e) {
+    let perfil = document.getElementById("perfilForm");
+
+    if (perfil) {
+        perfil.addEventListener("submit", function(e) {
             e.preventDefault();
 
             fetch("/coletar", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     tipo: "perfil",
                     nome: e.target.nome.value,
