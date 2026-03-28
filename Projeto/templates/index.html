@@ -3,120 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATIVIDADE 04</title>
+    <title>Teste de Usabilidade</title>
     <style>
-        /* Estilo base seguindo suas imagens */
+        /* Restaurando o visual ROXO e AZUL original */
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #ffffff; 
+            font-family: 'Segoe UI', sans-serif; 
             display: flex; 
-            justify-content: center; 
+            flex-direction: column; 
             align-items: center; 
-            height: 100vh; 
-            margin: 0; 
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff; 
         }
-        .container { 
-            width: 90%; 
-            max-width: 500px; 
-            text-align: center;
-        }
-        h2 { 
-            color: #4e5d6c; 
-            font-size: 28px; 
-            margin-bottom: 25px; 
-        }
-        .campo { 
-            margin-bottom: 15px; 
-        }
+        .container { width: 90%; max-width: 500px; text-align: center; }
+        h2 { color: #4e5d6c; font-size: 26px; margin-bottom: 25px; }
+        .campo { margin-bottom: 15px; }
         
-        input, select { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid #ccc; 
-            border-radius: 12px; 
-            box-sizing: border-box; 
-            font-size: 16px; 
-            color: #555;
-            outline: none;
+        input { 
+            width: 100%; padding: 12px; border: 1px solid #ccc; 
+            border-radius: 10px; box-sizing: border-box; font-size: 16px;
         }
 
-        input:focus, select:focus {
-            border-color: #6a76d4;
-        }
-
-        /* Botão com o degradê azul/roxo da sua imagem */
+        /* O BOTÃO COM DEGRADÊ ORIGINAL */
         button { 
-            width: 180px; 
-            padding: 12px; 
-            margin-top: 20px;
+            width: 180px; padding: 12px; margin-top: 15px;
             background: linear-gradient(to right, #6a76d4, #8b66c4); 
-            color: white; 
-            border: none; 
-            border-radius: 15px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            font-weight: 500;
-            transition: 0.3s; 
-            box-shadow: 0 4px 10px rgba(106, 118, 212, 0.3);
+            color: white; border: none; border-radius: 15px; 
+            cursor: pointer; font-size: 16px; font-weight: bold;
+            box-shadow: 0 4px 10px rgba(106, 118, 212, 0.2);
+            transition: 0.3s;
         }
-        button:hover { 
-            opacity: 0.9; 
-            transform: translateY(-2px); 
-        }
+        button:hover { opacity: 0.9; }
+
+        .btn-tarefa { background: #4e5d6c; margin-top: 40px; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h2>Perfil do Usuário</h2>
-        
         <form id="perfilForm">
-            <div class="campo">
-                <input type="text" name="nome" placeholder="Nome" required>
-            </div>
-            <div class="campo">
-                <input type="number" name="idade" placeholder="Idade" required>
-            </div>
-            <div class="campo">
-                <select name="universidade" required>
-                    <option value="">Selecione sua universidade...</option>
-                    <option value="Universidade São Judas Mooca">Universidade São Judas Mooca</option>
-                    <option value="USP">USP</option>
-                    <option value="UNIP">UNIP</option>
-                    <option value="Mackenzie">Mackenzie</option>
-                    <option value="Anhembi Morumbi">Anhembi Morumbi</option>
-                    <option value="Outra">Outra</option>
-                </select>
-            </div>
+            <div class="campo"><input type="text" name="nome" placeholder="Nome" required></div>
+            <div class="campo"><input type="number" name="idade" placeholder="Idade" required></div>
             <button type="submit">Salvar Perfil</button>
         </form>
+
+        <form id="feedbackForm" style="margin-top: 50px;">
+            <div class="campo">
+                <input type="text" name="problema" placeholder="Descreva um problema encontrado">
+            </div>
+            <button type="submit">Enviar Feedback</button>
+        </form>
+        
+        <button class="btn-tarefa" onclick="tarefaConcluida()">Finalizar Tarefa</button>
     </div>
 
     <script>
-        document.getElementById("perfilForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-
-            let dados = {
-                tipo: "perfil",
-                nome: e.target.nome.value,
-                idade: e.target.idade.value,
-                universidade: e.target.universidade.value
-            };
-
+        /* 1. RESTAURANDO CAPTURA DE CLIQUES */
+        document.addEventListener("click", function(e) {
             fetch("/coletar", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(dados)
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Isso faz a troca de página automática
-                    window.location.href = "/usuarios"; 
-                } else {
-                    alert("Erro ao salvar perfil.");
-                }
-            })
-            .catch(err => console.error("Erro:", err));
+                body: JSON.stringify({
+                    tipo: "click",
+                    elemento: e.target.tagName,
+                    texto: e.target.innerText || e.target.value,
+                    x: e.clientX,
+                    y: e.clientY
+                })
+            });
+        });
+
+        /* 2. RESTAURANDO TEMPO DE TAREFA */
+        let inicioPagina = Date.now();
+        function tarefaConcluida() {
+            let tempoGasto = Date.now() - inicioPagina;
+            fetch("/coletar", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    tipo: "tempo",
+                    milisegundos: tempoGasto
+                })
+            });
+            alert("Tarefa finalizada e tempo registrado!");
+        }
+
+        /* 3. RESTAURANDO ENVIOS DE FORMULÁRIO */
+        document.addEventListener("DOMContentLoaded", function() {
+            // Salvar Perfil
+            document.getElementById("perfilForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const dados = {
+                    tipo: "perfil",
+                    nome: e.target.nome.value,
+                    idade: e.target.idade.value
+                };
+                fetch("/coletar", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(dados)
+                });
+                alert("Dados do perfil enviados!");
+            });
+
+            // Feedback
+            document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                fetch("/coletar", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        tipo: "feedback",
+                        mensagem: e.target.problema.value
+                    })
+                });
+                alert("Obrigado pelo seu feedback!");
+                e.target.reset();
+            });
         });
     </script>
 </body>
