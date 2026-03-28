@@ -1,128 +1,114 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste de Usabilidade</title>
+
     <style>
-        /* Restaurando o visual ROXO e AZUL original */
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center;
-            height: 100vh;
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             margin: 0;
-            background-color: #ffffff; 
-        }
-        .container { width: 90%; max-width: 500px; text-align: center; }
-        h2 { color: #4e5d6c; font-size: 26px; margin-bottom: 25px; }
-        .campo { margin-bottom: 15px; }
-        
-        input { 
-            width: 100%; padding: 12px; border: 1px solid #ccc; 
-            border-radius: 10px; box-sizing: border-box; font-size: 16px;
         }
 
-        /* O BOTÃO COM DEGRADÊ ORIGINAL */
-        button { 
-            width: 180px; padding: 12px; margin-top: 15px;
-            background: linear-gradient(to right, #6a76d4, #8b66c4); 
-            color: white; border: none; border-radius: 15px; 
-            cursor: pointer; font-size: 16px; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(106, 118, 212, 0.2);
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #444;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #555;
+        }
+
+        input, select {
+            padding: 10px;
+            width: 70%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
             transition: 0.3s;
+            margin: 5px;
         }
-        button:hover { opacity: 0.9; }
 
-        .btn-tarefa { background: #4e5d6c; margin-top: 40px; }
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
+
 <body>
 
-    <div class="container">
-        <h2>Perfil do Usuário</h2>
-        <form id="perfilForm">
-            <div class="campo"><input type="text" name="nome" placeholder="Nome" required></div>
-            <div class="campo"><input type="number" name="idade" placeholder="Idade" required></div>
-            <button type="submit">Salvar Perfil</button>
-        </form>
+<div class="container">
 
-        <form id="feedbackForm" style="margin-top: 50px;">
-            <div class="campo">
-                <input type="text" name="problema" placeholder="Descreva um problema encontrado">
-            </div>
-            <button type="submit">Enviar Feedback</button>
-        </form>
-        
-        <button class="btn-tarefa" onclick="tarefaConcluida()">Finalizar Tarefa</button>
-    </div>
+<h1>Teste de Usabilidade</h1>
 
-    <script>
-        /* 1. RESTAURANDO CAPTURA DE CLIQUES */
-        document.addEventListener("click", function(e) {
-            fetch("/coletar", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    tipo: "click",
-                    elemento: e.target.tagName,
-                    texto: e.target.innerText || e.target.value,
-                    x: e.clientX,
-                    y: e.clientY
-                })
-            });
-        });
+<h2>Perfil do Usuário</h2>
+<form id="perfilForm">
+    <input type="text" name="nome" placeholder="Nome"><br>
+    <input type="number" name="idade" placeholder="Idade"><br>
+    <select name="nivel">
+        <option>Iniciante</option>
+        <option>Intermediário</option>
+        <option>Avançado</option>
+    </select><br>
+    <button type="submit">Salvar Perfil</button>
+</form>
 
-        /* 2. RESTAURANDO TEMPO DE TAREFA */
-        let inicioPagina = Date.now();
-        function tarefaConcluida() {
-            let tempoGasto = Date.now() - inicioPagina;
-            fetch("/coletar", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    tipo: "tempo",
-                    milisegundos: tempoGasto
-                })
-            });
-            alert("Tarefa finalizada e tempo registrado!");
-        }
+<p>Este site coleta dados de interação para análise.</p>
 
-        /* 3. RESTAURANDO ENVIOS DE FORMULÁRIO */
-        document.addEventListener("DOMContentLoaded", function() {
-            // Salvar Perfil
-            document.getElementById("perfilForm").addEventListener("submit", function(e) {
-                e.preventDefault();
-                const dados = {
-                    tipo: "perfil",
-                    nome: e.target.nome.value,
-                    idade: e.target.idade.value
-                };
-                fetch("/coletar", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(dados)
-                });
-                alert("Dados do perfil enviados!");
-            });
+<h2>Buscar produto</h2>
+<input type="text" placeholder="Digite algo..."><br>
 
-            // Feedback
-            document.getElementById("feedbackForm").addEventListener("submit", function(e) {
-                e.preventDefault();
-                fetch("/coletar", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        tipo: "feedback",
-                        mensagem: e.target.problema.value
-                    })
-                });
-                alert("Obrigado pelo seu feedback!");
-                e.target.reset();
-            });
-        });
-    </script>
+<!-- 🔥 BOTÃO CORRETO -->
+<button onclick="irParaProdutos()">Ir para produtos</button>
+
+<h2>Feedback</h2>
+<form id="feedbackForm">
+    <input type="text" name="problema" placeholder="Digite seu feedback"><br>
+    <button type="submit">Enviar</button>
+</form>
+
+<a href="/dashboard">Ver Dashboard</a>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+<script>
+function irParaProdutos() {
+    tarefaConcluida(); // registra tempo
+    window.location.href = "/produtos";
+}
+</script>
+
 </body>
 </html>
